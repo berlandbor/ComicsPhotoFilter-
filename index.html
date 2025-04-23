@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Комикс-фильтр</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <button id="toggleSidebar">☰</button>
+    <!-- Заголовок над канвасом -->
+  <div id="canvasTitle">Комикс-фильтр к изображениям</div>
+
+  <div class="sidebar hidden" id="sidebar">
+    <h2>Комикс-фильтр</h2>
+    <input type="file" id="upload" accept="image/*"><hr>
+
+    <div class="section">
+      <h3>Изображение</h3>
+      <label>Постеризация:</label>
+      <div class="param-group">
+        <input type="range" id="poster" min="16" max="128" step="16" value="64">
+        <input type="number" id="posterInput" min="16" max="128" step="16" value="64">
+      </div>
+
+      <label>Насыщенность:</label>
+      <div class="param-group">
+        <input type="range" id="saturation" min="0" max="2" step="0.1" value="1.0">
+        <input type="number" id="saturationInput" min="0" max="2" step="0.1" value="1.0">
+      </div>
+
+      <label>Прозрачность картинки:</label>
+      <div class="param-group">
+        <input type="range" id="imageAlpha" min="0" max="255" value="255">
+        <span id="imageAlphaVal">255</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Контуры</h3>
+      <label>Чувствительность:</label>
+      <div class="param-group">
+        <input type="range" id="edgeThreshold" min="10" max="300" step="10" value="100">
+        <input type="number" id="edgeInput" min="10" max="300" step="10" value="100">
+      </div>
+
+      <label>Цвет:</label>
+      <input type="color" id="edgeColor" value="#000000">
+
+      <label>Прозрачность: <span id="alphaVal">255</span></label>
+      <input type="range" id="edgeAlpha" min="0" max="255" step="1" value="255">
+
+      <label><input type="checkbox" id="showEdges" checked> Показывать</label>
+      <label><input type="checkbox" id="onlyEdges"> Только контуры</label>
+
+      <div id="bgPicker" style="display:none;">
+        <label>Фон:</label>
+        <input type="color" id="bgColor" value="#ffffff">
+      </div>
+    </div>
+    <div class="section">
+  <h3>Фильтрация по цвету</h3>
+
+  <label>Цвет для фильтра:</label>
+  <input type="color" id="targetColor" value="#ff0000">
+
+  <label>Порог: <span id="colorToleranceVal">50</span></label>
+  <input type="range" id="colorTolerance" min="0" max="255" value="50">
+
+  <label><input type="radio" name="colorMode" value="bw" checked> Только выбранный (остальное ч/б)</label>
+  <label><input type="radio" name="colorMode" value="transparent"> Только выбранный (остальное прозрачно)</label>
+  <label><input type="radio" name="colorMode" value="replace"> Заменить выбранный цвет</label>
+
+  <div id="replacementColorContainer" style="display: none;">
+    <label>Новый цвет:</label>
+    <input type="color" id="replacementColor" value="#00ff00">
+  </div>
+</div>
+<label><input type="checkbox" id="enableColorFilter" checked> Включить цветовую фильтрацию</label>
+
+<!-- Вставь в index.html в блок «Дополнительно» или новый -->
+<div class="section">
+  <h3>Расширенная фильтрация по цветам</h3>
+  <label><input type="checkbox" id="enableChannelFilter"> Включить</label>
+  <div style="margin-left:10px">
+    <label>Цвет канала:
+      <select id="channelType">
+        <option value="red">Красный</option>
+        <option value="green">Зелёный</option>
+        <option value="blue">Синий</option>
+        <option value="yellow">Жёлтый</option>
+      </select>
+    </label>
+    <label>Порог: <span id="channelToleranceVal">60</span></label>
+    <input type="range" id="channelTolerance" min="0" max="255" value="60">
+    <label><input type="radio" name="channelMode" value="bw" checked> Остальное в ч/б</label>
+    <label><input type="radio" name="channelMode" value="transparent"> Остальное прозрачно</label>
+    <label><input type="radio" name="channelMode" value="remove"> Удалить несоответствующие</label>
+  </div>
+</div>
+    <div class="section">
+      <h3>Дополнительно</h3>
+      <label>Масштаб: <span id="zoomVal">1.0</span></label>
+      <input type="range" id="zoom" min="0.2" max="3" step="0.1" value="1.0">
+
+      <div style="margin-top: 10px;">
+        <button id="resetBtn">Сброс</button>
+        <button id="downloadBtn">Скачать</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('toggleSidebar').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
