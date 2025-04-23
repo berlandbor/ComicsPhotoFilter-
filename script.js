@@ -36,6 +36,14 @@ const zoomSlider = document.getElementById('zoom');
 const zoomVal = document.getElementById('zoomVal');
 const resetBtn = document.getElementById('resetBtn');
 const downloadBtn = document.getElementById('downloadBtn');
+const channelRed = document.getElementById('channelRed');
+const channelGreen = document.getElementById('channelGreen');
+const channelBlue = document.getElementById('channelBlue');
+const channelYellow = document.getElementById('channelYellow');
+
+[channelRed, channelGreen, channelBlue, channelYellow].forEach(cb =>
+  cb.addEventListener('input', applyFilter)
+);
 
 let originalImage = null;
 
@@ -288,6 +296,21 @@ function applyFilter() {
       }
     }
   }
+    for (let i = 0; i < src.length; i += 4) {
+  const r = src[i];
+  const g = src[i + 1];
+  const b = src[i + 2];
+
+  const isYellow = r > 180 && g > 180 && b < 130;
+
+  if (!channelRed.checked) src[i] = 0;
+  if (!channelGreen.checked) src[i + 1] = 0;
+  if (!channelBlue.checked) src[i + 2] = 0;
+  if (!channelYellow.checked && isYellow) {
+    src[i] = 0;
+    src[i + 1] = 0;
+  }
+}
 
   ctx.putImageData(new ImageData(src, width, height), 0, 0);
 }
