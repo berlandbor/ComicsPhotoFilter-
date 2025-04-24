@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Комикс-фильтр</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,6 +13,7 @@
 
   <div class="sidebar hidden" id="sidebar">
     <h2>Комикс-фильтр</h2>
+    <p>by berlandbor</p>
     <input type="file" id="upload" accept="image/*"><hr>
 
     <div class="section">
@@ -35,9 +35,9 @@
         <input type="range" id="imageAlpha" min="0" max="255" value="255">
         <span id="imageAlphaVal">255</span>
       </div>
-    </div>
+    </div><hr>
 
-    <div class="section"><hr>
+    <div class="section">
       <h3>Контуры</h3>
       <label>Чувствительность:</label>
       <div class="param-group">
@@ -58,8 +58,8 @@
         <label>Фон:</label>
         <input type="color" id="bgColor" value="#ffffff">
       </div>
-    </div>
-    <div class="section"><hr>
+    </div><hr>
+    <div class="section">
   <h3>Фильтрация по цвету</h3>
 
   <label>Цвет для фильтра:</label>
@@ -77,10 +77,10 @@
     <input type="color" id="replacementColor" value="#00ff00">
   </div>
 </div>
-<label><input type="checkbox" id="enableColorFilter" checked> Включить цветовую фильтрацию</label>
+<label><input type="checkbox" id="enableColorFilter" checked> Включить цветовую фильтрацию</label><hr>
 
 <!-- Вставь в index.html в блок «Дополнительно» или новый -->
-<div class="section"><hr>
+<div class="section">
   <h3>Расширенная фильтрация по цветам</h3>
   <label><input type="checkbox" id="enableChannelFilter"> Включить</label>
   <div style="margin-left:10px">
@@ -97,16 +97,37 @@
     <label><input type="radio" name="channelMode" value="bw" checked> Остальное в ч/б</label>
     <label><input type="radio" name="channelMode" value="transparent"> Остальное прозрачно</label>
     <label><input type="radio" name="channelMode" value="remove"> Удалить несоответствующие</label>
-  </div>
-  <div class="section"><hr>
+  </div><hr>
+  <div class="section">
   <h3>Отключение цветовых каналов</h3>
   <label><input type="checkbox" id="channelRed" checked> Красный</label><br>
   <label><input type="checkbox" id="channelGreen" checked> Зелёный</label><br>
   <label><input type="checkbox" id="channelBlue" checked> Синий</label><br>
   <label><input type="checkbox" id="channelYellow" checked> Жёлтый</label>
 </div>
-</div>
-    <div class="section"><hr>
+</div><hr>
+<div class="section">
+  <h3>Тонкая настройка цветовых каналов</h3>
+
+  <div class="channel-control">
+    <label><input type="checkbox" id="channel1_enable"> Канал 1</label>
+    <input type="color" id="channel1_color" value="#ff0000">
+    <input type="range" id="channel1_strength" min="-100" max="100" value="0">
+  </div>
+
+  <div class="channel-control">
+    <label><input type="checkbox" id="channel2_enable"> Канал 2</label>
+    <input type="color" id="channel2_color" value="#00ff00">
+    <input type="range" id="channel2_strength" min="-100" max="100" value="0">
+  </div>
+
+  <div class="channel-control">
+    <label><input type="checkbox" id="channel3_enable"> Канал 3</label>
+    <input type="color" id="channel3_color" value="#0000ff">
+    <input type="range" id="channel3_strength" min="-100" max="100" value="0">
+  </div>
+</div><hr>
+    <div class="section">
       <h3>Дополнительно</h3>
       <label>Масштаб: <span id="zoomVal">1.0</span></label>
       <input type="range" id="zoom" min="0.2" max="3" step="0.1" value="1.0">
