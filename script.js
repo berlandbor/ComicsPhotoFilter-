@@ -45,6 +45,30 @@ const channelYellow = document.getElementById('channelYellow');
   cb.addEventListener('input', applyFilter)
 );
 
+const channels = [
+  {
+    enable: document.getElementById('channel1_enable'),
+    color: document.getElementById('channel1_color'),
+    strength: document.getElementById('channel1_strength')
+  },
+  {
+    enable: document.getElementById('channel2_enable'),
+    color: document.getElementById('channel2_color'),
+    strength: document.getElementById('channel2_strength')
+  },
+  {
+    enable: document.getElementById('channel3_enable'),
+    color: document.getElementById('channel3_color'),
+    strength: document.getElementById('channel3_strength')
+  }
+];
+
+channels.forEach(ch => {
+  [ch.enable, ch.color, ch.strength].forEach(el =>
+    el.addEventListener('input', applyFilter)
+  );
+});
+
 let originalImage = null;
 
 function hexToRGB(hex) {
@@ -311,6 +335,27 @@ function applyFilter() {
     src[i + 1] = 0;
   }
 }
+
+channels.forEach(ch => {
+  if (!ch.enable.checked) return;
+
+  const baseColor = hexToRGB(ch.color.value);
+  const strength = parseInt(ch.strength.value); // -100 до +100
+
+  for (let i = 0; i < src.length; i += 4) {
+    const dr = src[i] - baseColor.r;
+    const dg = src[i + 1] - baseColor.g;
+    const db = src[i + 2] - baseColor.b;
+    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+
+    if (dist < 100) {
+      const factor = 1 + strength / 100;
+      src[i] = Math.min(255, Math.max(0, baseColor.r + (src[i] - baseColor.r) * factor));
+      src[i + 1] = Math.min(255, Math.max(0, baseColor.g + (src[i + 1] - baseColor.g) * factor));
+      src[i + 2] = Math.min(255, Math.max(0, baseColor.b + (src[i + 2] - baseColor.b) * factor));
+    }
+  }
+});
 
   ctx.putImageData(new ImageData(src, width, height), 0, 0);
 }
